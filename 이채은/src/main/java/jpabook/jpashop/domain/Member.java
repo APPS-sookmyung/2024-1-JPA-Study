@@ -1,18 +1,26 @@
 package jpabook.jpashop.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 public class Member {
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String username;
+
+    @Id @GeneratedValue
+    @Column(name = "member_id")
+    private Long id; // column으로 pk 값의 이름을 지정
+    private String name;
+
+    @Embedded
+    private Address address; // 필요한 type들은 직접 class 로 생성
+
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
 
 }

@@ -2,6 +2,7 @@ package jpabook.jpashop.domain.item;
 
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.Category;
+import jpabook.jpashop.domain.CategoryItem;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,13 +17,20 @@ public abstract class Item {
 
     @Id
     @GeneratedValue
-    @Column(name="item_id")
+    @Column(name = "item_id")
     private Long id;
 
     private String name;
     private int price;
     private int stockQuantity;
 
+    /*
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
+     */
+
+    //과제
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_item_id")
+    private CategoryItem categoryItem;
 }

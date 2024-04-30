@@ -18,11 +18,18 @@ public class Category {
 
     public String name;
 
+    /*
     @ManyToMany
     @JoinTable(name = "category_item",
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> items = new ArrayList<>();
+     */
+    
+    //과제
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="category_item_id")
+    private CategoryItem categoryItem;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")

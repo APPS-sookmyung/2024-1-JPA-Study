@@ -24,10 +24,10 @@ public abstract class Item {
     private int price;
     private int stockQuantity;
 
-//    @ManyToMany(mappedBy = "items")
-//    private List<Category> categories = new ArrayList<>();
+    @ManyToMany(mappedBy = "items")
+    private List<Category> categories = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_item_id")
-    private CategoryItem categoryItem;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "category_item_id")
+//    private CategoryItem categoryItem;
 }

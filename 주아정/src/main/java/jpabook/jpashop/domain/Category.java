@@ -20,15 +20,15 @@ public class Category {
 
     private String name;
 
-//    @ManyToMany
-//    @JoinTable(name = "category_item",
-//            joinColumns = @JoinColumn(name = "category_id"),
-//            inverseJoinColumns = @JoinColumn(name = "item_id")) // 중간 테이블에 있는 카테고리 아이디
-//    private List<Item> items = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "category_item",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")) // 중간 테이블에 있는 카테고리 아이디
+    private List<Item> items = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_item_id")
-    private CategoryItem categoryItem;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "category_item_id")
+//    private CategoryItem categoryItem;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")

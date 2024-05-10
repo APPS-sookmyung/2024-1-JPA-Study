@@ -13,14 +13,14 @@ import java.util.List;
 //@Setter
 public class CategoryItem {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "category_item_id")
-//    private Long id;
-//
-//    @OneToMany(mappedBy = "categoryItem")
-//    private List<Category> categories = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "categoryItem")
-//    private List<Item> items = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_item_id")
+    private Long id;
+
+    @OneToMany(mappedBy = "categoryItem")
+    private List<Category> categories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "categoryItem")
+    private List<Item> items = new ArrayList<>();
 }

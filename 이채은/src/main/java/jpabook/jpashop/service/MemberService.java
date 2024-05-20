@@ -16,8 +16,7 @@ import java.util.List;
 public class MemberService {
     private final MemberRepository memberRepository;
     /**
-     *
-     회원가입
+     * 회원가입
      */
     @Transactional
     public Long join(MemberDto memberDto) {
@@ -46,10 +45,9 @@ public class MemberService {
     }
 
     private Member dtoToEntity(MemberDto memberDto) {
-        Address address = new Address(memberDto.getCity(), memberDto.getStreet(), memberDto.getZipcode());
-        Member member = new Member();
-        member.setName(memberDto.getName());
-        member.setAddress(address);
-        return member;
+        return Member.builder()
+                .name(memberDto.getName())
+                .address(new Address(memberDto.getCity(), memberDto.getStreet(), memberDto.getZipcode()))
+                .build();
     }
 }

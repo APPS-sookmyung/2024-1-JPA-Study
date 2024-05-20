@@ -19,7 +19,7 @@ public class Member {
     private String name;
 
     @Embedded
-    private Address addresss;
+    private Address address;
 
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();

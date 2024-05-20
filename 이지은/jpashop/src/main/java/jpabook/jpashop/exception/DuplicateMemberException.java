@@ -1,5 +1,8 @@
 package jpabook.jpashop.exception;
 
+import lombok.Getter;
+
+@Getter
 public class DuplicateMemberException extends RuntimeException{
 
     private final MemberErrorCode errorCode;
@@ -8,7 +11,9 @@ public class DuplicateMemberException extends RuntimeException{
         this.errorCode = errorCode;
     }
     
+    /*
     public MemberErrorCode getErrorCode(){
         return errorCode;
     }
+     */
 }

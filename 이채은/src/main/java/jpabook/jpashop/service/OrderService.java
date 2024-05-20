@@ -1,4 +1,6 @@
 package jpabook.jpashop.service;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jpabook.jpashop.domain.*;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
@@ -7,6 +9,9 @@ import jpabook.jpashop.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -15,6 +20,7 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
+    private final EntityManager em;
     /** 주문 */
     @Transactional
     public Long order(Long memberId, Long itemId, int count) {
@@ -43,9 +49,50 @@ public class OrderService {
         order.cancel();
     }
     /** 주문 검색 */
- /*
-    public List<Order> findOrders(OrderSearch orderSearch) {
-        return orderRepository.findAll(orderSearch);
+
+    public List<Order> findAllByString(OrderSearch orderSearch) {
+        // language=JPAQL
+        String jpql = "select o From Order o join o.member m";
+        boolean isFirstCondition = true;
+
+        // 주문 상태 검색
+        if (orderSearch.getOrderStatus() != null) {
+            if (isFirstCondition) {
+                jpql += " where";
+                isFirstCondition = false;
+            } else {
+                jpql += " and";
+            }
+            jpql += " o.status = :status";
+        }
+
+        // 회원 이름 검색
+        if (StringUtils.hasText(orderSearch.getMemberName())) {
+            if (isFirstCondition) {
+                jpql += " where";
+                isFirstCondition = false;
+            } else {
+                jpql += " and";
+            }
+            jpql += " m.name like :name";
+        }
+
+        TypedQuery<Order> query = em.createQuery(jpql, Order.class)
+                .setMaxResults(1000); // 최대 1000건
+
+        if (orderSearch.getOrderStatus() != null) {
+            query.setParameter("status", orderSearch.getOrderStatus());
+        }
+
+        if (StringUtils.hasText(orderSearch.getMemberName())) {
+            query.setParameter("name", "%" + orderSearch.getMemberName() + "%");
+        }
+
+        return query.getResultList();
     }
- */
+
+    public List<Order> findOrders(OrderSearch orderSearch) {
+        return findAllByString(orderSearch);
+    }
 }
+

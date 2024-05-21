@@ -1,6 +1,8 @@
 package jpabook.jpashop.service;
 
+import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.dto.MemberDto;
 import jpabook.jpashop.exception.DuplicateMemberException;
 import jpabook.jpashop.exception.MemberErrorCode;
 import jpabook.jpashop.repository.MemberRepository;
@@ -19,11 +21,26 @@ public class MemberService {
 
 
     private final MemberRepository memberRepository;
+    
 
     //회원 가입
     @Transactional
     public Long join(Member member){
         validateDuplicateMember(member); //중복 회원 검증
+        memberRepository.save(member);
+        return member.getId();
+    }
+
+    
+    // 과제
+    //회원 가입
+    @Transactional
+    public Long join(MemberDto memberDto){
+        // validateDuplicateMember(member); //중복 회원 검증
+        Member member = Member.builder()
+                        .name(memberDto.getName())
+                        .address(new Address(memberDto.getCity(), memberDto.getStreet(), memberDto.getZipcode()))
+                        .build();
         memberRepository.save(member);
         return member.getId();
     }

@@ -3,6 +3,7 @@ package jpabook.jpashop.Controller;
 import jakarta.validation.Valid;
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.dto.MemberDto;
 import jpabook.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,8 @@ public class MemberController {
         model.addAttribute("memberForm", new MemberForm());
         return "members/createMemberForm";
     }
-
+    
+/* 원래 코드
     @PostMapping("/members/new")
     public String create(@Valid MemberForm form, BindingResult result){
 
@@ -34,11 +36,26 @@ public class MemberController {
 
         Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
 
-        Member member = new Member();
-        member.setName(form.getName());
-        member.setAddress(address);
+         Member member = new Member();
+         member.setName(form.getName());
+         member.setAddress(address);
 
         memberService.join(member);
+
+        return "redirect:/";
+    }
+    
+ */
+    // 과제 코드
+    @PostMapping("/members/new")
+    public String create(@Valid MemberDto memberDto, BindingResult result){
+
+        if(result.hasErrors()){
+            return "members/createMemberForm";
+        }
+
+        memberService.join(memberDto);
+
         return "redirect:/";
     }
 

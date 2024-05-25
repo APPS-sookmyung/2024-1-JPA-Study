@@ -7,10 +7,8 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "order_item")
-@Getter
-@Setter
+@Getter @Setter
 public class OrderItem {
-
     @Id @GeneratedValue
     @Column(name = "order_item_id")
     private Long id;
